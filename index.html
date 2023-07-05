@@ -113,8 +113,10 @@
             10. **Machine learning**
             11. **Data in .JSONL**
             12. creating files
-            13. Solid Drawing
-            14. Appeal
+            13. firstish file
+            14. second file
+            15. third file
+            16. final file
 
             ---
             ### requirments 
@@ -155,7 +157,6 @@
             });
             const openai = new OpenAIApi(configuration);
             ```
-            - copy and paste this bitch
             - our OPENAI_API_KEY will be read from our dotenv import
 
             ---
@@ -269,26 +270,77 @@
 
             ---
 
-            ## Performance Considerations
-            While the `transition` property is more performant than `animation`, there are performance considerations:
-            - Don't transition `all` properties (the default). Explicitly define which properties you'd like to transition.
-            - The `transform` and `opacity` properties are more optimized than other properties.
-            - Use `translate3D()` instead of `translateX()` or `translateY()` because they are graphics accelerated.
+            ## Creating fine tune function and file
+            - we paste our file id beside training_file
+              ```js
+              import { openai } from "./index.js";
+
+              async function createFineTune() {
+              try {
+                  const response = await openai.createFineTune({
+                  training_file: "file-Example",
+                  model: "davinci",
+                  });
+                  console.log("response: ", response);
+                } catch (err) {
+                  console.log("error: ", err.response.data.error);
+                }
+              }
+             
+              createFineTune();
+              ```
+              - depending on the file size it may take up to 48 hours to complete
+              - run the function in node
+            
 
             ---
 
-            ## Further Learning
-            Articles:
-            - [12 Principles of Animation](https://idearocketanimation.com/13721-12-principles-of-animation-gifs/)
-            - MDN Documentation: 
-                - [`transition`](https://developer.mozilla.org/en-US/docs/Web/CSS/transition) property
-                - [Using CSS Animations](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations)
+            ## Status Check function
+              ```js
+              import { openai } from "./index.js";
 
-            Videos:
-            - Val Head: [Designing Meaningful Animation](https://www.youtube.com/watch?v=EUszcZNbtjs)
-            - Kevin Powell: [10 CSS animation tips and tricks](https://www.youtube.com/watch?v=y8-F5-2EIcg)
+              async function listFineTunes() {
+              try {
+                  const response = await openai.listFineTunes();
+                  console.log("data: ", response.data.data);
+              } catch (err) {
+                  console.log("error: ", err);
+              }
+              }
+             
+              listFineTunes();
+              ```
+              - this function checks the status of our ai training
+              ```json
+              status: 'pending',
+              fine_tuned_model: null
+              ```
+              
+            ---
 
+            ## last function frfr
+            ```js
+            import { openai } from "./script.js";
+            
+            async function createCompletion() {
+              try {
+                const response = await openai.createCompletion({
+                  model: "davinci:ft-personal-model",
+                  prompt: "ask your question here",
+                });
+                  if (response.data) {
+                    console.log("choices: ", response.data.choices);
+                  }
+                } catch (err) {
+                  console.log("err: ", err);
+                }
+            }
+            
+            createCompletion();
+            ```
 
+            - now lets test out your model by running the file with node.
+            - DONE
           </textarea>
         </section>
       </div>
