@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat GPT</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.2.1/reveal.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.2.1/theme/sky.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.2.1/plugin/highlight/monokai.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.2.1/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.2.1/plugin/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.2.1/reveal.js"></script>
+    <style>
+      :root {
+        --r-heading-text-transform: small-caps;
+      }
+
+      body .reveal .slides {
+        font-size: 36px;
+        text-align: left;
+      }
+
+      body .reveal .slides h1 {
+        font-size: 3em;
+      }
+
+      body .reveal .slides h2 {
+        font-size: 2em;
+      }
+
+      h1,
+      h2 {
+        text-align: center;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-variant: small-caps;
+        text-align: center;
+      }
+
+      h1 code,
+      h2 code,
+      h3 code,
+      h4 code,
+      h5 code,
+      h6 code {
+        font-variant: initial;
+      }
+
+      dd {
+        margin-bottom: 2rem;
+      }
+
+      .reveal p > img {
+        display: block;
+        margin: auto;
+      }
+
+      .reveal pre code {
+        padding: 1rem;
+      }
+
+      .code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 2.5rem;
+        white-space: nowrap;
+        color: grey;
+      }
+
+      .code strong {
+        color: black;
+      }
+
+      .code.no-bullet {
+        list-style: none;
+        padding-left: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown>
+          <textarea data-template>
+            # Chat GPT
+            ## Connecting to API and training using M/L
+
+            ---
+
+            ## 12 API and Chat GPT by copying Tony's slides
+            1. index
+            2. Requirments
+            3. Creating a chat GPT account to access the api key
+            4. Node.js server and adding index.js and .env files
+            5. Chat GPT api call function
+            6. adding scripts
+            7. Adding readline into node
+            8. Downloading Python (pip3) and training ai
+            9. how to install python
+            10. **Machine learning**
+            11. **Data in .JSONL**
+            12. creating files
+            13. Solid Drawing
+            14. Appeal
+
+            ---
+            ### requirments 
+            - Node
+            - Javascript
+            - loving and admiring Zack
+            
+
+            ### *Training AI requirments*
+            - python
+
+            ---
+
+            ### Creating an account
+            ## weblink https://platform.openai.com/
+            - without an account you cannot access the API
+            - so follow the link above and JUST DO IT!
+
+            ![](images/shia-labeouf.gif)
+
+            ---
+
+            ### UGH you know the drill
+            - create a folder(chatgptAPI) with good ole mkdir in the bash or zsh cmd line in your project folder
+            - in our chatgptAPI folder lets make an index.js file and an .env file
+            - npm install for node modules
+            - npm install dotenv
+            - npm install openai (for ai access)
+
+            ---
+
+            ## API call Function
+            ```js
+            import { Configuration, OpenAIApi } from "openai";
+
+            const configuration = new Configuration({
+                apiKey: process.env.OPENAI_API_KEY,
+            });
+            const openai = new OpenAIApi(configuration);
+            ```
+            - copy and paste this bitch
+            - our OPENAI_API_KEY will be read from our dotenv import
+
+            ---
+
+            ### Edit "package.json file with following : "
+
+
+            ```json
+                "type": "module",
+            ```
+
+        
+            ```json
+                "scripts": {
+                  "dev": "node script.js"
+                },
+            ```
+
+            ---
+
+            ### Adding readline to talk to GPT in node!
+            ## adding userInterface
+            - Create userInterface Function in index.js
+                        ```js
+            const userInterface = readline.createInterface({
+                input: process.stdin,
+                output: process.stdout,
+                });
+                userInterface.prompt();
+               
+                userInterface.on("line", async (input) => {
+                const res = await openai.createChatCompletion({
+                    model: "gpt-3.5-turbo",
+                    messages: [{ role: "user", content: input }],
+                });
+                // Log only useful information
+                console.log(res.data.choices[0].message.content);
+                });
+            ``` 
+
+            - lets test it out!
+
+            ---
+
+            ## Adding pyhton into zsh or bash
+
+            ---
+
+            ### Python or pip3
+            - is python installed? use pip3 --version to find out
+            - if not install let's get to it!
+            - for mac, if you have homebrew installed use "brew install python"  after download we should now see our version
+            - for windows, follow this link https://programmingwithjim.wordpress.com/2020/09/08/installing-python-3-in-git-bash-on-windows-10/
+            - run pip or pip3 install --upgrade openai openai"[datalib]"
+
+            ---
+
+            ### intro to M/L (machine learning)
+            - What is machine learning you ask? well Zack will tell you, free of charge.
+            - Machine learning is a branch of artificial intelligence (AI) and computer science which focuses on the use of data and algorithms to imitate the way that humans learn, gradually improving its accuracy.
+            - AI learns only through patterns. 
+            - if there is anything outside the scope of the pattern the AI will consider it an outlier even if the outlier is potentially correct.
+        
+
+            ---
+
+            ## Lets make some data to train our AI
+            we will use data.jsonl fromate the "l" just means we can upload over 5gb of data
+            - we have to use 500 lines of jsonl with "prompt: " and "completion: " 
+            - writing 500 lines will take forever Zack. Yea I know so... lets us Chat GPT to do our work
+
+            example of promt and completion data:
+            ```json 
+                {"prompt": "<prompt text>", "completion": "<ideal generated text>"}
+                {"prompt": "<prompt text>", "completion": "<ideal generated text>"}
+                {"prompt": "<prompt text>", "completion": "<ideal generated text>"}
+            ```
+            - lets ask chat GPT "User what are some good examples of training data in jsonl format with prompt and completion fields on how to write javascript functions give me 10 examples in the same response"
+
+            ---
+
+            ### Creating a few files
+
+            ---
+
+            ## Files in order(hopefully)
+            - using cmd line  openai tools fine_tunes.prepare_data -f <LOCAL_FILE>(data.jsonl)
+            - creating uploadFileFunction and new file
+
+            ```js
+                import { openai } from "./index.js";
+                import fs from "fs";
+          
+                async function upload() {
+                try {
+                    const response = await openai.createFile(
+                    fs.createReadStream("./data_prepared.jsonl"),
+                    "fine-tune"
+                    );
+                 console.log("File ID: ", response.data.id);
+             } catch (err) {
+                    console.log("err", err);
+             } 
+            }
+          
+            upload();
+            ```
+
+            - run the file in node. node index.js
+            - copy the file ID that was created
+
+            ---
+
+            ## Performance Considerations
+            While the `transition` property is more performant than `animation`, there are performance considerations:
+            - Don't transition `all` properties (the default). Explicitly define which properties you'd like to transition.
+            - The `transform` and `opacity` properties are more optimized than other properties.
+            - Use `translate3D()` instead of `translateX()` or `translateY()` because they are graphics accelerated.
+
+            ---
+
+            ## Further Learning
+            Articles:
+            - [12 Principles of Animation](https://idearocketanimation.com/13721-12-principles-of-animation-gifs/)
+            - MDN Documentation: 
+                - [`transition`](https://developer.mozilla.org/en-US/docs/Web/CSS/transition) property
+                - [Using CSS Animations](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations)
+
+            Videos:
+            - Val Head: [Designing Meaningful Animation](https://www.youtube.com/watch?v=EUszcZNbtjs)
+            - Kevin Powell: [10 CSS animation tips and tricks](https://www.youtube.com/watch?v=y8-F5-2EIcg)
+
+
+          </textarea>
+        </section>
+      </div>
+    </div>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        plugins: [RevealMarkdown, RevealHighlight],
+      });
+    </script>
+  </body>
+</html>
